@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 0 112 64" fill="none" stroke="#05070C">
+  <defs>
+    <mask id="ears" maskUnits="userSpaceOnUse" x="-200" y="-200" width="1000" height="1000">
+      <rect x="-20" y="-20" width="160" height="120" fill="white" />
+      <circle cx="2" cy="32" r="2.5" fill="black" />
+      <circle cx="102" cy="32" r="2.5" fill="black" />
+    </mask>
+  </defs>
+  <g mask="url(#ears)">
+    <path d="M24 49c-10.5 0-19-7.6-19-17 0-9.4 8.5-17 19-17 14 0 14 8 28 8s14-8 28-8c10.5 0 19 7.6 19 17 0 9.4-8.5 17-19 17-14 0-14-8-28-8s-14 8-28 8z" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle cx="2" cy="32" r="2.5" fill="none" stroke-width="2"/>
+  <circle cx="102" cy="32" r="2.5" fill="none" stroke-width="2"/>
+  <path d="M18 32h12M74 32h12" stroke-width="4" stroke-linecap="round"/>
+</svg>

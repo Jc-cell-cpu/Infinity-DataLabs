@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 0 112 64" fill="none">
+  <defs>
+    <linearGradient id="a" x1="5" y1="15" x2="101" y2="52" gradientUnits="userSpaceOnUse"><stop stop-color="#315BFF"/><stop offset=".34" stop-color="#477CFF"/><stop offset=".56" stop-color="#704CFF"/><stop offset=".8" stop-color="#4937E8"/><stop offset="1" stop-color="#8A5CFF"/></linearGradient>
+    <mask id="ears" maskUnits="userSpaceOnUse" x="-200" y="-200" width="1000" height="1000">
+      <rect x="-20" y="-20" width="160" height="120" fill="white" />
+      <circle cx="2" cy="32" r="3.5" fill="black" />
+      <circle cx="102" cy="32" r="3.5" fill="black" />
+    </mask>
+  </defs>
+  <g mask="url(#ears)">
+    <path d="M24 49c-10.5 0-19-7.6-19-17 0-9.4 8.5-17 19-17 14 0 14 8 28 8s14-8 28-8c10.5 0 19 7.6 19 17 0 9.4-8.5 17-19 17-14 0-14-8-28-8s-14 8-28 8z" stroke="url(#a)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle cx="2" cy="32" r="3.5" fill="none" stroke="url(#a)" stroke-width="2.5"/>
+  <circle cx="102" cy="32" r="3.5" fill="none" stroke="url(#a)" stroke-width="2.5"/>
+  <path d="M18 32h12" stroke="#3B9DFF" stroke-width="6" stroke-linecap="round"/>
+  <path d="M74 32h12" stroke="#78E2BD" stroke-width="6" stroke-linecap="round"/>
+</svg>

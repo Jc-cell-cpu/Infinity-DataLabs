@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-16T09:19:52Z",
+  "title": "Design System: Infinity DataLabs",
+  "extensions": {
+    "colorMeta": {
+      "deep-space": { "role": "neutral", "displayName": "Deep Space", "canonical": "#05070C", "tonalRamp": ["oklch(13% 0.015 260)", "oklch(20% 0.015 260)", "oklch(30% 0.015 260)", "oklch(42% 0.015 260)", "oklch(55% 0.015 260)", "oklch(70% 0.015 260)", "oklch(84% 0.015 260)", "oklch(95% 0.008 260)"] },
+      "elevated": { "role": "neutral", "displayName": "Elevated", "canonical": "#0A0E17", "tonalRamp": ["oklch(15% 0.02 262)", "oklch(24% 0.02 262)", "oklch(34% 0.02 262)", "oklch(45% 0.02 262)", "oklch(57% 0.02 262)", "oklch(70% 0.02 262)", "oklch(83% 0.015 262)", "oklch(95% 0.008 262)"] },
+      "surface": { "role": "neutral", "displayName": "Surface", "canonical": "#101725", "tonalRamp": ["oklch(15% 0.025 262)", "oklch(24% 0.025 262)", "oklch(34% 0.025 262)", "oklch(45% 0.025 262)", "oklch(57% 0.025 262)", "oklch(70% 0.025 262)", "oklch(83% 0.02 262)", "oklch(95% 0.01 262)"] },
+      "starlight": { "role": "neutral", "displayName": "Starlight", "canonical": "#F4F7FB", "tonalRamp": ["oklch(15% 0.005 240)", "oklch(26% 0.005 240)", "oklch(38% 0.005 240)", "oklch(49% 0.005 240)", "oklch(61% 0.005 240)", "oklch(72% 0.005 240)", "oklch(84% 0.005 240)", "oklch(97% 0.005 240)"] },
+      "muted": { "role": "neutral", "displayName": "Muted Stratus", "canonical": "#9AA8BC", "tonalRamp": ["oklch(15% 0.03 250)", "oklch(26% 0.03 250)", "oklch(38% 0.03 250)", "oklch(49% 0.03 250)", "oklch(61% 0.03 250)", "oklch(72% 0.03 250)", "oklch(84% 0.02 250)", "oklch(95% 0.01 250)"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "rgba(255,255,255,0.10)", "tonalRamp": ["rgba(255,255,255,0.04)", "rgba(255,255,255,0.06)", "rgba(255,255,255,0.08)", "rgba(255,255,255,0.10)", "rgba(255,255,255,0.15)", "rgba(255,255,255,0.20)", "rgba(255,255,255,0.30)", "rgba(255,255,255,0.45)"] },
+      "electric-blue": { "role": "primary", "displayName": "Electric Blue", "canonical": "#5B8CFF", "tonalRamp": ["oklch(15% 0.19 267)", "oklch(26% 0.19 267)", "oklch(38% 0.19 267)", "oklch(49% 0.19 267)", "oklch(61% 0.19 267)", "oklch(72% 0.19 267)", "oklch(84% 0.13 267)", "oklch(95% 0.05 267)"] },
+      "signal-cyan": { "role": "primary", "displayName": "Signal Cyan", "canonical": "#58E6FF", "tonalRamp": ["oklch(15% 0.08 211)", "oklch(26% 0.10 211)", "oklch(38% 0.12 211)", "oklch(49% 0.12 211)", "oklch(61% 0.12 211)", "oklch(72% 0.12 211)", "oklch(85% 0.12 211)", "oklch(95% 0.05 211)"] },
+      "spectral-violet": { "role": "secondary", "displayName": "Spectral Violet", "canonical": "#8B5CF6", "tonalRamp": ["oklch(15% 0.15 293)", "oklch(26% 0.18 293)", "oklch(38% 0.21 293)", "oklch(49% 0.21 293)", "oklch(61% 0.21 293)", "oklch(72% 0.18 293)", "oklch(84% 0.12 293)", "oklch(95% 0.05 293)"] },
+      "success-mint": { "role": "secondary", "displayName": "Success Mint", "canonical": "#4ADE80", "tonalRamp": ["oklch(15% 0.10 152)", "oklch(26% 0.13 152)", "oklch(38% 0.16 152)", "oklch(49% 0.17 152)", "oklch(61% 0.17 152)", "oklch(72% 0.17 152)", "oklch(84% 0.14 152)", "oklch(95% 0.06 152)"] },
+      "pure-white": { "role": "primary", "displayName": "Pure White", "canonical": "#FFFFFF", "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(100% 0 0)"] },
+      "ink-inverse": { "role": "primary", "displayName": "Ink Inverse", "canonical": "#07101D", "tonalRamp": ["oklch(14% 0.03 255)", "oklch(25% 0.03 255)", "oklch(37% 0.03 255)", "oklch(48% 0.03 255)", "oklch(60% 0.03 255)", "oklch(71% 0.03 255)", "oklch(83% 0.02 255)", "oklch(95% 0.01 255)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Homepage hero headline only; carries the single animated display gradient." },
+      "headline": { "displayName": "Headline", "purpose": "Section and page h2s, text-wrap: balance, stepped 2.25rem to 3.75rem by breakpoint." },
+      "title": { "displayName": "Title", "purpose": "Card and sub-section h3s." },
+      "body": { "displayName": "Body", "purpose": "Paragraph copy in slate-300/400; lead paragraphs step to 1.125-1.25rem; cap at 65-75ch." },
+      "label": { "displayName": "Eyebrow Label", "purpose": "Uppercase section kicker in #9EEFFF; tiny mono badges are a separate whispered voice (10-11px system mono)." }
+    },
+    "shadows": [
+      { "name": "button-halo", "value": "0 12px 40px rgba(91,140,255,.15)", "purpose": "Blue ambient glow under the primary CTA; conversion has its own light." },
+      { "name": "header-float", "value": "0 12px 50px rgba(0,0,0,.28)", "purpose": "Scrolled navigation bar, the one true floating layer (pairs with backdrop-blur)." },
+      { "name": "node-glow", "value": "0 0 12px #58E6FF", "purpose": "Live-status dots and small luminous markers." },
+      { "name": "footer-cta", "value": "inset 0 1px rgba(255,255,255,.08), 0 16px 48px rgba(0,0,0,.22)", "purpose": "Inset light edge plus soft drop for the footer's featured panel." },
+      { "name": "social-hover-glow", "value": "0 0 24px rgba(6,182,212,.1)", "purpose": "Hover halo on footer social icons." }
+    ],
+    "motion": [
+      { "name": "micro", "value": "200ms ease", "purpose": "Micro-interactions band 180-260ms: hovers, focus, color shifts." },
+      { "name": "reveal", "value": "600ms ease-out", "purpose": "Section reveals 500-700ms with short travel distance." },
+      { "name": "arrive", "value": "2.8s cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Hero nebula staged arrival: blur + rise + scale, once per visit." },
+      { "name": "marquee", "value": "34s linear infinite", "purpose": "Technology marquee drift with masked edges." },
+      { "name": "ambient", "value": "12s-22s ease-in-out infinite alternate", "purpose": "Footer atmosphere loops: mesh breathe, particle float, divider travel." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The brightest object on any screen: white pill with blue halo, for the primary CTA.",
+      "html": "<button class=\"ds-btn-primary\">Talk to our team <svg class=\"ds-btn-arrow\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7\"/><path d=\"M7 7h10v10\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; border: none; border-radius: 999px; background: #ffffff; color: #07101d; font-family: Inter, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 12px 40px rgba(91,140,255,.15); transition: background-color 200ms ease; } .ds-btn-primary:hover { background: #cffafe; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 12px 40px rgba(91,140,255,.15), 0 0 0 2px #05070c, 0 0 0 4px #67e8f9; } .ds-btn-arrow { transition: transform 200ms ease; } .ds-btn-primary:hover .ds-btn-arrow { transform: translate(2px, -2px); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ghost pill with hairline border; the fallback action beside a primary CTA.",
+      "html": "<button class=\"ds-btn-secondary\">Explore services</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; border: 1px solid rgba(255,255,255,.15); border-radius: 999px; background: rgba(255,255,255,.04); color: #ffffff; font-family: Inter, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: border-color 200ms ease, background-color 200ms ease; } .ds-btn-secondary:hover { border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.08); } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 2px #05070c, 0 0 0 4px #67e8f9; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Text-only pill for tertiary actions.",
+      "html": "<button class=\"ds-btn-ghost\">View all</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; border: none; border-radius: 999px; background: transparent; color: #e2e8f0; font-family: Inter, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 200ms ease, color 200ms ease; } .ds-btn-ghost:hover { background: rgba(255,255,255,.06); color: #ffffff; } .ds-btn-ghost:focus-visible { outline: none; box-shadow: 0 0 0 2px #05070c, 0 0 0 4px #67e8f9; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Form field: hairline border over black glass, soft cyan focus glow.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"you@company.com\" aria-label=\"Work email\" />",
+      "css": ".ds-input { height: 48px; width: 100%; max-width: 320px; padding: 0 16px; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; background: rgba(0,0,0,.2); color: #ffffff; font-family: Inter, Arial, sans-serif; font-size: 16px; outline: none; transition: border-color 200ms ease, box-shadow 200ms ease; } .ds-input::placeholder { color: #475569; } .ds-input:hover { border-color: rgba(255,255,255,.2); } .ds-input:focus { border-color: rgba(103,232,249,.6); box-shadow: 0 0 0 2px rgba(103,232,249,.15); }"
+    },
+    {
+      "name": "Service Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Capability card: icon tile, mono index, base-anchored title, hover brightens and warms to cyan.",
+      "html": "<a class=\"ds-card\" href=\"#\"><span class=\"ds-card-index\">01</span><span class=\"ds-card-icon\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 3a9 9 0 1 0 9 9\"/></svg></span><span class=\"ds-card-title\">AI &amp; Agentic Systems</span><span class=\"ds-card-copy\">Production AI that reasons, retrieves, acts, and integrates with the systems your teams already use.</span><span class=\"ds-card-more\">Explore <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7\"/><path d=\"M7 7h10v10\"/></svg></span></a>",
+      "css": ".ds-card { position: relative; display: flex; flex-direction: column; min-height: 280px; width: 300px; padding: 24px; border: 1px solid rgba(255,255,255,.1); border-radius: 24px; background: rgba(255,255,255,.025); color: #f4f7fb; font-family: Inter, Arial, sans-serif; text-decoration: none; overflow: hidden; transition: border-color 300ms ease, background-color 300ms ease; } .ds-card:hover { border-color: rgba(255,255,255,.2); background: rgba(255,255,255,.045); } .ds-card:focus-visible { outline: none; box-shadow: 0 0 0 2px #05070c, 0 0 0 4px #67e8f9; } .ds-card-index { position: absolute; top: 16px; right: 20px; font-family: ui-monospace, SFMono-Regular, monospace; font-size: 11px; letter-spacing: .05em; color: #64748b; } .ds-card-icon { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; background: rgba(255,255,255,.04); color: #a5f3fc; transition: border-color 300ms ease, background-color 300ms ease; } .ds-card:hover .ds-card-icon { border-color: rgba(103,232,249,.25); background: rgba(103,232,249,.07); } .ds-card-title { display: block; margin-top: 48px; font-family: 'Space Grotesk', Inter, sans-serif; font-size: 24px; font-weight: 500; letter-spacing: -.04em; color: #ffffff; } .ds-card-copy { display: block; margin-top: 12px; font-size: 14px; line-height: 1.7; color: #94a3b8; } .ds-card-more { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; font-size: 12px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: #cbd5e1; transition: color 300ms ease; } .ds-card:hover .ds-card-more { color: #a5f3fc; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Pill hit-area with a cyan-to-blue gradient underline that scales in from the left.",
+      "html": "<nav style=\"display:flex;gap:4px\"><a class=\"ds-nav-link\" href=\"#\" aria-current=\"page\">Services</a><a class=\"ds-nav-link\" href=\"#\">Talent</a><a class=\"ds-nav-link\" href=\"#\">About</a></nav>",
+      "css": ".ds-nav-link { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; color: #cbd5e1; font-family: Inter, Arial, sans-serif; font-size: 14px; font-weight: 500; text-decoration: none; transition: color 200ms ease; } .ds-nav-link:hover { color: #ffffff; } .ds-nav-link[aria-current=\"page\"] { color: #ffffff; } .ds-nav-link::after { content: \"\"; position: absolute; left: 16px; right: 16px; bottom: 4px; height: 1px; background: linear-gradient(90deg, #67e8f9, #3b82f6); transform: scaleX(0); transform-origin: left; transition: transform 200ms ease; } .ds-nav-link:hover::after, .ds-nav-link[aria-current=\"page\"]::after { transform: scaleX(1); } .ds-nav-link:focus-visible { outline: none; box-shadow: 0 0 0 2px #05070c, 0 0 0 4px #67e8f9; }"
+    },
+    {
+      "name": "Eyebrow Label",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "Uppercase section kicker in pale cyan; the committed section grammar.",
+      "html": "<p class=\"ds-eyebrow\">Connected expertise</p>",
+      "css": ".ds-eyebrow { margin: 0; color: #9eefff; font-family: Inter, Arial, sans-serif; font-size: 11.5px; font-weight: 650; letter-spacing: .19em; line-height: 1.4; text-transform: uppercase; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Observatory",
+    "overview": "The interface is a dark observatory: a near-black canvas where light is information, never decoration. Spectral accents — Electric Blue, Signal Cyan, Spectral Violet — behave like distant phenomena: glows, hairlines, particle fields, and focus rings that reward attention. Structure comes from 1px lines of light and generous space, not from boxes and shadows. The signature moments (the hero's infinity nebula, the living footer atmosphere) are the telescope views — a few places where the frontier is shown in full, while everything around them stays calm and exact.\n\nThe personality is precise, calm, ambitious. Editorial restraint meets engineering precision: content is served in a stable 1240px column with deliberate section rhythm, asymmetry used selectively over a twelve-column grid. Controls are tactile and confident — generous pills, soft glows, immediate feedback — warmer to touch than the clinical darkness suggests. This system explicitly rejects the generic agency site and never manufactures trust with fake logos, unverified metrics, or invented case studies.",
+    "keyCharacteristics": [
+      "Near-black canvas (#05070C) with depth drawn by light: hairline borders, translucent white fills, ambient glow",
+      "Spectral accents used as light sources at small scale, never as large painted surfaces",
+      "Space Grotesk display voice with tightening negative tracking; Inter for everything else",
+      "Tactile, confident controls: pill buttons, soft cyan feedback, 44px minimum targets",
+      "Motion is purposeful and staged: one 2.8s hero arrival, 500-700ms reveals, 180-260ms micro-interactions, slow ambient loops in the footer",
+      "WCAG AA contrast, visible focus rings, and reduced-motion alternatives are non-negotiable brand requirements"
+    ],
+    "rules": [
+      { "name": "The Brightest Object Rule", "body": "The brightest element on any screen is the primary CTA (white pill). Nothing else — no panel, no illustration, no heading treatment — may out-shine the action we want taken.", "section": "colors" },
+      { "name": "The Light, Not Paint Rule", "body": "Spectral accents appear as light: glows, 1px gradient lines, focus rings, particles, small type. A large flat fill of Electric Blue, Signal Cyan, or Spectral Violet is off-system.", "section": "colors" },
+      { "name": "The Tightening Rule", "body": "Tracking tightens as type grows: -0.04em at title, -0.055em at headline, -0.075em at display — and never goes negative at body sizes.", "section": "typography" },
+      { "name": "The One Gradient Rule", "body": "The animated display gradient exists in exactly one place: the homepage hero's leading word. It is a signature, not a technique — never reuse gradient text on any other heading.", "section": "typography" },
+      { "name": "The Floating Chrome Rule", "body": "Only elements that float above the page (scrolled header, primary CTA, toasts) may cast shadow. Panels, cards, and sections in the page flow get borders and fills, never drop shadows.", "section": "elevation" },
+      { "name": "The Brighten, Don't Bounce Rule", "body": "State changes brighten — border, fill, glow — over 180-260ms. Nothing bounces, scales, or displaces layout; the only permitted travel is a ≤2px icon nudge.", "section": "components" }
+    ],
+    "dos": [
+      "Do keep body text at AA contrast or better: slate-300 (#CBD5E1) is the floor for paragraph copy on the canvas; muted tones are for metadata only.",
+      "Do hold the structural line at exactly 1px white/10 — structure is drawn, not boxed.",
+      "Do route every hover state through light: brighter border, brighter fill, soft glow, within 180-260ms.",
+      "Do keep the primary CTA the brightest object on every screen (The Brightest Object Rule).",
+      "Do ship a reduced-motion path for every animation: hero arrival, marquee, footer atmosphere, smooth scroll, and cursor glow all degrade to static or instant.",
+      "Do keep sections on the shared rhythm: 1240px max width, 20/32px gutters, clamp(5rem, 10vw, 8.5rem) vertical padding.",
+      "Do concentrate ambition in signature moments (nebula, footer atmosphere) and keep everything around them calm — \"frontier, not gimmick\" (PRODUCT.md)."
+    ],
+    "donts": [
+      "Don't use giant gradient blobs, neon overload, carousels, stock-office photography, excessive glass, or gratuitous motion (PRODUCT.md anti-references, verbatim).",
+      "Don't manufacture trust: no fake client logos, unverified metrics, invented case studies, or named leadership profiles — anywhere, ever.",
+      "Don't paint large surfaces with spectral accents; they are light sources (The Light, Not Paint Rule).",
+      "Don't reuse gradient text beyond the hero's single signature word (The One Gradient Rule).",
+      "Don't add fonts. Two voices (Space Grotesk display, Inter text) plus whispered mono badges is the complete cast.",
+      "Don't animate layout properties or add bounce/elastic easing; opacity, transform, and filter only, eased out.",
+      "Don't use colored side-stripe borders (border-left accents), nested cards, or icon-heading-text card grids that read as template scaffolding.",
+      "Don't let any interactive target fall under 44px or ship without a visible focus ring.",
+      "Audit test: if a section could be screenshotted into a generic SaaS template deck without anyone noticing, it fails The Observatory — rework it."
+    ]
+  }
+}
