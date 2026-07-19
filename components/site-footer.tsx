@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowUpRight, Clock3, Globe2, Mail } from "lucide-react";
+import { ArrowUpRight, Clock3, Globe2, Mail, MapPin } from "lucide-react";
 import { FooterAtmosphere } from "@/components/footer-atmosphere";
 import { FooterContactLink } from "@/components/footer-contact-link";
+import { offices } from "@/lib/site-data";
 
 const groups = [
   { title: "Services", links: [["AI & Agentic Systems", "/services#ai-agentic-systems"], ["Software Engineering", "/services#software-engineering"], ["Cloud & Platforms", "/services#cloud-platforms"], ["Cyber Security", "/services#cyber-security"]] },
@@ -44,6 +45,7 @@ export function SiteFooter() {
             <a href="https://infinity-datalabs.com" className="footer-contact-row group"><Globe2 className="size-4 text-blue-300" aria-hidden="true" /><span>infinity-datalabs.com</span></a>
             <div className="footer-contact-row"><Clock3 className="size-4 text-emerald-300" aria-hidden="true" /><span>Response within two business days</span></div>
           </div>
+          <div className="mt-6"><p className="text-[11px] font-semibold uppercase tracking-[.16em] text-slate-500">Offices</p><p className="mt-2 flex items-start gap-2 text-sm text-slate-400"><MapPin className="mt-0.5 size-4 shrink-0 text-violet-300" aria-hidden="true" /><span>{offices.map((office) => (office.hq ? `${office.city} (HQ)` : office.city)).join(" · ")}</span></p></div>
           <div className="mt-7 flex items-center gap-2" aria-label="Social channels">
             {[{ label: "LinkedIn", icon: <LinkedInIcon /> }, { label: "X", icon: <XIcon /> }, { label: "GitHub", icon: <GitHubIcon /> }].map((social) => <span key={social.label} className="footer-social-icon" role="img" aria-label={`${social.label} profile link pending`} title={`${social.label} profile link pending`}>{social.icon}</span>)}
           </div>

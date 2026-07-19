@@ -31,7 +31,7 @@ export function ContactForm() {
   const field = "mt-2 h-12 w-full rounded-xl border border-white/10 bg-black/20 px-4 text-base text-white outline-none transition-colors placeholder:text-slate-600 hover:border-white/20 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/15";
 
   return <form onSubmit={submit} className="rounded-[1.75rem] border border-white/10 bg-white/[.025] p-5 sm:p-8" noValidate>
-    <label className="absolute -left-[9999px]" aria-hidden="true">Website<input name="website" tabIndex={-1} autoComplete="off" /></label>
+    <div className="hidden" aria-hidden="true"><label htmlFor="contact_hp">Leave this field empty</label><input id="contact_hp" name="contact_hp" type="text" tabIndex={-1} autoComplete="off" /></div>
     <div className="grid gap-5 sm:grid-cols-2">
       <label className="text-sm font-medium text-slate-300">Name<input className={field} name="name" autoComplete="name" required minLength={2} placeholder="Your name" /></label>
       <label className="text-sm font-medium text-slate-300">Work email<input className={field} type="email" name="email" autoComplete="email" required placeholder="you@company.com" /></label>

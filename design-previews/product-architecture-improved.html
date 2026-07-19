@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Product Architecture — refined concept</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2305070c'/%3E%3Cpath d='M5 16c3-7 7-7 11 0s8 7 11 0c-3-7-7-7-11 0S8 23 5 16Z' fill='none' stroke='%2358e6ff' stroke-width='2'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --canvas: #05070c;
+      --surface: #080d16;
+      --surface-raised: #0b111d;
+      --ink: #f4f7fb;
+      --copy: #cbd5e1;
+      --muted: #9aa8bc;
+      --quiet: #7d8da5;
+      --line: rgba(255, 255, 255, 0.1);
+      --line-strong: rgba(255, 255, 255, 0.17);
+      --cyan: #58e6ff;
+      --blue: #5b8cff;
+      --violet: #a78bfa;
+      --mint: #4ade80;
+      --display: "Space Grotesk", Inter, system-ui, sans-serif;
+      --body: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--canvas); scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      overflow-x: clip;
+      background:
+        radial-gradient(800px 430px at 18% -4%, rgba(88, 230, 255, 0.045), transparent 68%),
+        radial-gradient(720px 420px at 90% 6%, rgba(139, 92, 246, 0.055), transparent 66%),
+        var(--canvas);
+      color: var(--ink);
+      font-family: var(--body);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    img, svg { display: block; }
+    p, h1, h2, h3 { margin: 0; }
+    ::selection { background: rgba(88, 230, 255, 0.22); color: #fff; }
+
+    .shell {
+      width: min(100% - clamp(2.5rem, 7vw, 6rem), 1240px);
+      margin-inline: auto;
+      padding-block: clamp(2rem, 6vw, 5rem) 3rem;
+    }
+
+    .masthead {
+      padding-bottom: clamp(4.5rem, 10vw, 8.5rem);
+    }
+
+    .masthead__bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      min-height: 48px;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-mark { width: min(230px, 54vw); height: auto; }
+
+    .concept-note {
+      color: var(--quiet);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .masthead__copy {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+      align-items: end;
+      gap: clamp(2rem, 7vw, 7rem);
+      padding-top: clamp(3.5rem, 8vw, 7rem);
+    }
+
+    .masthead h1 {
+      max-width: 12ch;
+      font-family: var(--display);
+      font-size: clamp(3rem, 6.7vw, 5.8rem);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 0.96;
+      text-wrap: balance;
+    }
+
+    .masthead__lead {
+      max-width: 38rem;
+      color: var(--copy);
+      font-size: clamp(1rem, 1.5vw, 1.16rem);
+      line-height: 1.75;
+      text-wrap: pretty;
+    }
+
+    .masthead__lead strong { color: #fff; font-weight: 500; }
+
+    .product {
+      --accent: var(--cyan);
+      padding-block: clamp(5rem, 11vw, 9rem);
+      border-top: 1px solid var(--line);
+    }
+
+    .product--testing { --accent: var(--blue); }
+    .product--support { --accent: var(--violet); }
+
+    .product__intro {
+      display: grid;
+      grid-template-columns: minmax(12rem, 0.72fr) minmax(0, 1.28fr);
+      gap: clamp(2rem, 8vw, 8rem);
+      align-items: start;
+      margin-bottom: clamp(2rem, 5vw, 3.5rem);
+    }
+
+    .product__identity {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      color: var(--accent);
+    }
+
+    .product__icon {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent) 7%, transparent);
+    }
+
+    .product__icon svg { width: 21px; height: 21px; }
+
+    .product__type {
+      color: color-mix(in srgb, var(--accent) 78%, #fff);
+      font-size: 0.79rem;
+      font-weight: 600;
+    }
+
+    .product h2 {
+      margin-top: 1.2rem;
+      font-family: var(--display);
+      font-size: clamp(2.35rem, 5vw, 4.5rem);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      text-wrap: balance;
+    }
+
+    .product__statement {
+      max-width: 47rem;
+      padding-top: 0.2rem;
+      color: var(--copy);
+      font-size: clamp(1.08rem, 2vw, 1.45rem);
+      line-height: 1.55;
+      text-wrap: pretty;
+    }
+
+    .product__statement strong { color: #fff; font-weight: 500; }
+
+    .system {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+      isolation: isolate;
+    }
+
+    .system::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(70% 80% at 50% 0%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 75%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .system__topline {
+      display: flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.65rem clamp(1rem, 2.2vw, 1.5rem);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.07em;
+    }
+
+    .system__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: #a7f3d0;
+      white-space: nowrap;
+    }
+
+    .system__status::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 10px rgba(74, 222, 128, 0.72);
+      content: "";
+      animation: status-breathe 2.8s ease-in-out infinite;
+    }
+
+    .system__footer {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(19rem, 0.7fr);
+      gap: clamp(1.5rem, 4vw, 4rem);
+      align-items: center;
+      padding: clamp(1.25rem, 3vw, 2rem);
+      border-top: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.14);
+    }
+
+    .system__footer-copy {
+      max-width: 66ch;
+      color: var(--copy);
+      font-size: 0.94rem;
+      line-height: 1.7;
+      text-wrap: pretty;
+    }
+
+    .event-feed { display: flex; flex-direction: column; }
+
+    .event {
+      display: grid;
+      grid-template-columns: 18px 1fr auto;
+      gap: 0.65rem;
+      align-items: center;
+      min-height: 38px;
+      color: var(--copy);
+      font-size: 0.78rem;
+    }
+
+    .event + .event { border-top: 1px solid rgba(255, 255, 255, 0.07); }
+
+    .event__check {
+      display: grid;
+      width: 18px;
+      height: 18px;
+      place-items: center;
+      border: 1px solid rgba(74, 222, 128, 0.32);
+      border-radius: 50%;
+      color: var(--mint);
+      font-size: 0.65rem;
+    }
+
+    .event__meta {
+      color: var(--quiet);
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    /* Voice — a live signal crossing one reasoning core. */
+    .voice-map {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(180px, 0.78fr) minmax(0, 1fr);
+      gap: clamp(1rem, 4vw, 3.25rem);
+      align-items: center;
+      min-height: 440px;
+      padding: clamp(1.5rem, 4vw, 3.25rem);
+    }
+
+    .voice-connectors {
+      position: absolute;
+      inset: 8% 4%;
+      width: 92%;
+      height: 84%;
+      pointer-events: none;
+    }
+
+    .connector-base { stroke: rgba(255, 255, 255, 0.1); }
+    .connector-flow {
+      stroke: var(--accent);
+      stroke-dasharray: 2 10;
+      stroke-linecap: round;
+      animation: signal-flow 3.8s linear infinite;
+    }
+
+    .signal-bank { position: relative; z-index: 1; }
+
+    .signal-bank__label {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 0.8rem;
+      color: color-mix(in srgb, var(--accent) 72%, #fff);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .signal-bank__label::before {
+      width: 18px;
+      height: 1px;
+      background: var(--accent);
+      content: "";
+    }
+
+    .signal-bank--out .signal-bank__label { justify-content: flex-end; }
+    .signal-bank--out .signal-bank__label::before { order: 2; }
+
+    .signal-list { margin: 0; padding: 0; list-style: none; }
+
+    .signal {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 0.8rem;
+      align-items: center;
+      min-height: 74px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .signal:first-child { border-top: 1px solid var(--line); }
+
+    .signal__icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      color: var(--accent);
+    }
+
+    .signal__icon svg { width: 18px; height: 18px; }
+    .signal__name { color: var(--ink); font-size: 0.87rem; font-weight: 500; }
+    .signal__detail { margin-top: 0.22rem; color: var(--quiet); font-family: var(--mono); font-size: 0.59rem; line-height: 1.4; }
+
+    .voice-core {
+      position: relative;
+      z-index: 2;
+      min-height: 235px;
+      display: grid;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+      border-radius: 16px;
+      background: #08111b;
+      text-align: center;
+    }
+
+    .voice-core::before,
+    .voice-core::after {
+      position: absolute;
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .voice-core::before { width: 116px; height: 116px; }
+    .voice-core::after { width: 154px; height: 154px; opacity: 0.55; }
+
+    .voice-core__content { position: relative; z-index: 1; padding: 1rem; }
+
+    .voice-core__mark {
+      display: grid;
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 1rem;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #051019;
+    }
+
+    .voice-core__mark svg { width: 24px; height: 24px; }
+    .voice-core h3 { font-family: var(--display); font-size: 1.05rem; font-weight: 500; }
+    .voice-core p { margin-top: 0.42rem; color: #a8ddea; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em; line-height: 1.5; }
+
+    .waveform {
+      position: absolute;
+      right: 13%;
+      bottom: 1rem;
+      left: 13%;
+      display: flex;
+      height: 28px;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .waveform i {
+      width: 2px;
+      height: 100%;
+      border-radius: 2px;
+      background: var(--accent);
+      transform: scaleY(var(--h, 0.3));
+      animation: waveform 1.7s ease-in-out infinite alternate;
+      animation-delay: var(--d, 0s);
+    }
+
+    /* Testing — a readable operating cycle, not another hub. */
+    .test-layout {
+      display: grid;
+      grid-template-columns: minmax(14rem, 0.58fr) minmax(0, 1.42fr);
+      min-height: 590px;
+    }
+
+    .test-summary {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2.5rem;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border-right: 1px solid var(--line);
+      background: rgba(91, 140, 255, 0.025);
+    }
+
+    .test-summary h3 {
+      max-width: 12ch;
+      font-family: var(--display);
+      font-size: clamp(1.55rem, 3vw, 2.45rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .test-summary p { margin-top: 1rem; color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+    .run-state { display: grid; gap: 0.6rem; }
+
+    .run-state__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 38px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+    }
+
+    .run-state__row strong { color: var(--copy); font-weight: 500; }
+
+    .test-pipeline {
+      position: relative;
+      margin: 0;
+      padding: clamp(1.1rem, 2vw, 1.5rem) clamp(1.25rem, 3.3vw, 2.5rem);
+      list-style: none;
+    }
+
+    .test-pipeline::before {
+      position: absolute;
+      top: 2.6rem;
+      bottom: 2.6rem;
+      left: calc(clamp(1.25rem, 3.3vw, 2.5rem) + 18px);
+      width: 1px;
+      background: linear-gradient(180deg, var(--cyan), var(--blue) 48%, var(--violet));
+      opacity: 0.46;
+      content: "";
+    }
+
+    .test-step {
+      position: relative;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+      gap: clamp(0.85rem, 2vw, 1.35rem);
+      align-items: center;
+      min-height: 86px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .test-step:last-child { border-bottom: 0; }
+
+    .test-step__number {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      width: 37px;
+      height: 37px;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+      border-radius: 50%;
+      background: #0b1220;
+      color: #c7d5ff;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+    }
+
+    .test-step h3 { font-size: 0.93rem; font-weight: 500; }
+    .test-step p { margin-top: 0.27rem; color: var(--quiet); font-size: 0.76rem; line-height: 1.5; }
+
+    .test-step__verb {
+      color: color-mix(in srgb, var(--accent) 78%, #fff);
+      font-family: var(--mono);
+      font-size: 0.59rem;
+      letter-spacing: 0.07em;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .cycle-note {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      min-height: 54px;
+      padding: 0.75rem clamp(1.25rem, 3vw, 2rem);
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .cycle-note svg { width: 17px; height: 17px; color: var(--accent); }
+
+    /* Support — visible routing and explicit escalation. */
+    .support-map {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(10rem, 0.72fr) minmax(16rem, 1fr) minmax(13rem, 0.9fr);
+      gap: clamp(1.25rem, 4vw, 3.25rem);
+      align-items: stretch;
+      min-height: 430px;
+      padding: clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .support-connectors {
+      position: absolute;
+      inset: 4% 3%;
+      width: 94%;
+      height: 92%;
+      pointer-events: none;
+    }
+
+    .route-zone { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+
+    .route-zone__label {
+      margin-bottom: 0.9rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .channel-list { display: grid; gap: 0.2rem; }
+
+    .channel {
+      display: flex;
+      min-height: 52px;
+      align-items: center;
+      gap: 0.7rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--copy);
+      font-size: 0.84rem;
+    }
+
+    .channel:first-child { border-top: 1px solid var(--line); }
+    .channel svg { width: 17px; height: 17px; color: var(--accent); }
+
+    .support-core {
+      align-self: center;
+      border: 1px solid color-mix(in srgb, var(--accent) 36%, transparent);
+      border-radius: 16px;
+      background: #0d0d1a;
+    }
+
+    .support-core__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 62px;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .support-core__head h3 { font-family: var(--display); font-size: 1rem; font-weight: 500; }
+
+    .support-core__head span {
+      color: #d8ccff;
+      font-family: var(--mono);
+      font-size: 0.57rem;
+      letter-spacing: 0.06em;
+    }
+
+    .core-stage {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 0.75rem;
+      align-items: center;
+      min-height: 68px;
+      margin-inline: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .core-stage:last-child { border-bottom: 0; }
+
+    .core-stage__index {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 9px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      color: #d8ccff;
+      font-family: var(--mono);
+      font-size: 0.59rem;
+    }
+
+    .core-stage__name { color: var(--ink); font-size: 0.81rem; font-weight: 500; }
+    .core-stage__detail { margin-top: 0.2rem; color: var(--quiet); font-family: var(--mono); font-size: 0.56rem; line-height: 1.45; }
+
+    .outcome-list { display: grid; gap: 0.7rem; }
+
+    .outcome {
+      position: relative;
+      min-height: 92px;
+      padding: 1rem 1rem 1rem 3rem;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .outcome + .outcome { margin-top: -1px; }
+
+    .outcome::before {
+      position: absolute;
+      top: 1.15rem;
+      left: 1rem;
+      display: grid;
+      width: 22px;
+      height: 22px;
+      place-items: center;
+      border: 1px solid rgba(74, 222, 128, 0.32);
+      border-radius: 50%;
+      color: var(--mint);
+      content: "✓";
+      font-size: 0.68rem;
+    }
+
+    .outcome--human::before {
+      border-color: color-mix(in srgb, var(--accent) 42%, transparent);
+      color: var(--accent);
+      content: "↗";
+    }
+
+    .outcome h3 { font-size: 0.85rem; font-weight: 500; }
+    .outcome p { margin-top: 0.35rem; color: var(--quiet); font-size: 0.73rem; line-height: 1.5; }
+
+    .learning-loop {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      min-height: 54px;
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.77rem;
+      text-align: center;
+    }
+
+    .learning-loop svg { width: 16px; height: 16px; color: var(--accent); }
+
+    .page-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 70px;
+      border-top: 1px solid var(--line);
+      color: var(--quiet);
+      font-size: 0.72rem;
+    }
+
+    .page-foot span:last-child { font-family: var(--mono); font-size: 0.62rem; }
+
+    @keyframes signal-flow { to { stroke-dashoffset: -36; } }
+    @keyframes status-breathe { 50% { opacity: 0.4; } }
+    @keyframes waveform { to { transform: scaleY(0.18); opacity: 0.45; } }
+
+    @media (max-width: 900px) {
+      .masthead__copy,
+      .product__intro { grid-template-columns: 1fr; }
+
+      .masthead__copy { align-items: start; gap: 2rem; }
+      .masthead h1 { max-width: 10ch; }
+      .product__intro { gap: 1.6rem; }
+
+      .system__footer { grid-template-columns: 1fr; }
+      .voice-map { grid-template-columns: 1fr; min-height: auto; }
+      .voice-connectors { display: none; }
+      .signal-bank--out .signal-bank__label { justify-content: flex-start; }
+      .signal-bank--out .signal-bank__label::before { order: 0; }
+      .voice-core { order: -1; min-height: 220px; }
+      .waveform { display: none; }
+
+      .test-layout { grid-template-columns: 1fr; }
+      .test-summary { border-right: 0; border-bottom: 1px solid var(--line); }
+      .test-summary h3 { max-width: 18ch; }
+
+      .support-map { grid-template-columns: 1fr 1fr; }
+      .support-connectors { display: none; }
+      .support-core { grid-row: span 2; align-self: stretch; }
+    }
+
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 2rem, 1240px); padding-top: 1.25rem; }
+      .masthead__bar { align-items: flex-start; }
+      .concept-note { white-space: normal; text-align: right; }
+      .masthead h1 { font-size: clamp(2.7rem, 15vw, 4.25rem); }
+
+      .system__topline { align-items: flex-start; }
+      .voice-map { padding: 1.15rem; }
+      .signal { min-height: 68px; }
+      .voice-core { min-height: 200px; }
+
+      .test-step { grid-template-columns: 38px minmax(0, 1fr); min-height: 100px; }
+      .test-step__verb { grid-column: 2; margin-top: -0.6rem; text-align: left; }
+
+      .support-map { grid-template-columns: 1fr; padding: 1.15rem; }
+      .support-core { grid-row: auto; order: -1; }
+      .route-zone { justify-content: flex-start; }
+
+      .event { grid-template-columns: 18px 1fr; }
+      .event__meta { grid-column: 2; margin-top: -0.35rem; }
+      .page-foot { align-items: flex-start; flex-direction: column; justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .connector-flow { stroke-dasharray: none; opacity: 0.52; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div class="masthead__bar">
+        <img class="brand-mark" src="../public/brand/infinity-datalabs-horizontal-white.svg" alt="Infinity DataLabs" />
+        <span class="concept-note">Product systems · refined concept</span>
+      </div>
+      <div class="masthead__copy">
+        <h1>Three agents. Three operating models.</h1>
+        <p class="masthead__lead">Each product is designed around a different job: <strong>hold a natural conversation, keep quality continuous, or resolve support end to end.</strong> The architecture should make that difference visible at a glance.</p>
+      </div>
+    </header>
+
+    <article class="product product--voice">
+      <div class="product__intro">
+        <div>
+          <div class="product__identity">
+            <span class="product__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z"/><path d="M19 11v1a7 7 0 0 1-14 0v-1M12 19v3"/></svg>
+            </span>
+            <span class="product__type">Real-time conversation system</span>
+          </div>
+          <h2>Voice AI Agent</h2>
+        </div>
+        <p class="product__statement">A low-latency voice loop with one grounded reasoning core between the caller and your systems. It can <strong>understand, act, and hand off without losing context.</strong></p>
+      </div>
+
+      <section class="system" aria-labelledby="voice-system-title">
+        <div class="system__topline">
+          <span id="voice-system-title">Conversation signal path</span>
+          <span class="system__status">Live · 184 ms response</span>
+        </div>
+
+        <div class="voice-map">
+          <svg class="voice-connectors" viewBox="0 0 1000 380" preserveAspectRatio="none" fill="none" aria-hidden="true">
+            <path class="connector-base" d="M275 92 C390 92 390 190 485 190 M275 190 H485 M275 288 C390 288 390 190 485 190" />
+            <path class="connector-base" d="M515 190 C610 190 610 92 725 92 M515 190 H725 M515 190 C610 190 610 288 725 288" />
+            <path class="connector-flow" d="M275 92 C390 92 390 190 485 190 M275 190 H485 M275 288 C390 288 390 190 485 190" />
+            <path class="connector-flow" d="M515 190 C610 190 610 92 725 92 M515 190 H725 M515 190 C610 190 610 288 725 288" />
+          </svg>
+
+          <div class="signal-bank">
+            <div class="signal-bank__label">Signals in</div>
+            <ul class="signal-list">
+              <li class="signal">
+                <span class="signal__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2 12h2l2-7 4 14 4-14 4 14 2-7h2"/></svg></span>
+                <div><div class="signal__name">Voice ingress</div><div class="signal__detail">PSTN · SIP · WebRTC</div></div>
+              </li>
+              <li class="signal">
+                <span class="signal__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 10v4M8 6v12M12 3v18M16 7v10M20 10v4"/></svg></span>
+                <div><div class="signal__name">Streaming speech recognition</div><div class="signal__detail">Intent · language · timing</div></div>
+              </li>
+              <li class="signal">
+                <span class="signal__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14v10H9l-4 4V5Z"/><path d="M9 9h6M9 12h4"/></svg></span>
+                <div><div class="signal__name">Conversation state</div><div class="signal__detail">Turn-taking · memory · policy</div></div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="voice-core">
+            <div class="voice-core__content">
+              <span class="voice-core__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.8 15.4a2 2 0 0 0-1.4-1.4l-5.8-1.5a.5.5 0 0 1 0-1L8.4 10a2 2 0 0 0 1.4-1.4l1.6-5.8a.5.5 0 0 1 1 0L14 8.6a2 2 0 0 0 1.4 1.4l5.8 1.5a.5.5 0 0 1 0 1L15.4 14a2 2 0 0 0-1.4 1.4l-1.6 5.8a.5.5 0 0 1-1 0Z"/></svg></span>
+              <h3>Reasoning core</h3>
+              <p>LLM + RAG<br />guardrails + memory</p>
+            </div>
+          </div>
+
+          <div class="signal-bank signal-bank--out">
+            <div class="signal-bank__label">Systems out</div>
+            <ul class="signal-list">
+              <li class="signal">
+                <span class="signal__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h3l5 4V5L7 9H4Z"/><path d="M16 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12"/></svg></span>
+                <div><div class="signal__name">Natural voice response</div><div class="signal__detail">Streamed TTS · interruption-aware</div></div>
+              </li>
+              <li class="signal">
+                <span class="signal__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
+                <div><div class="signal__name">Actions and tools</div><div class="signal__detail">CRM · booking · payments · APIs</div></div>
+              </li>
+              <li class="signal">
+                <span class="signal__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 18 0M21 16v2a4 4 0 0 1-4 4h-5"/><rect x="2" y="11" width="5" height="7" rx="1"/><rect x="17" y="11" width="5" height="7" rx="1"/></svg></span>
+                <div><div class="signal__name">Human handoff</div><div class="signal__detail">Warm transfer · full transcript</div></div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="waveform" aria-hidden="true">
+            <i style="--h:.25;--d:-.2s"></i><i style="--h:.55;--d:-.8s"></i><i style="--h:.9;--d:-.4s"></i><i style="--h:.4;--d:-1.1s"></i><i style="--h:.75;--d:-.6s"></i><i style="--h:.3;--d:-1.3s"></i><i style="--h:.65;--d:-.1s"></i><i style="--h:.95;--d:-.9s"></i><i style="--h:.45;--d:-.5s"></i><i style="--h:.7;--d:-1.2s"></i><i style="--h:.35;--d:-.3s"></i><i style="--h:.6;--d:-1s"></i>
+          </div>
+        </div>
+
+        <div class="system__footer">
+          <p class="system__footer-copy">The important story is the loop: audio becomes understanding, understanding becomes an action, and the result returns as a natural response — all while the call is still live.</p>
+          <div class="event-feed" aria-label="Example live events">
+            <div class="event"><span class="event__check">✓</span><span>Caller intent recognised</span><span class="event__meta">grounded</span></div>
+            <div class="event"><span class="event__check">✓</span><span>Booking updated in CRM</span><span class="event__meta">action</span></div>
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <article class="product product--testing">
+      <div class="product__intro">
+        <div>
+          <div class="product__identity">
+            <span class="product__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L5.2 17A2 2 0 0 0 7 20h10a2 2 0 0 0 1.8-3L14 9.5V3"/><path d="M8.5 14h7"/></svg></span>
+            <span class="product__type">Continuous quality system</span>
+          </div>
+          <h2>Testing Agent</h2>
+        </div>
+        <p class="product__statement">A self-maintaining quality loop that learns the product before it tests it. Every change moves through <strong>model, plan, execute, verify, diagnose, and report.</strong></p>
+      </div>
+
+      <section class="system" aria-labelledby="testing-system-title">
+        <div class="system__topline">
+          <span id="testing-system-title">Quality operating cycle</span>
+          <span class="system__status">Latest change passing</span>
+        </div>
+
+        <div class="test-layout">
+          <div class="test-summary">
+            <div>
+              <h3>Tests that evolve with the product.</h3>
+              <p>The model and test suite are maintained together, so coverage does not become a snapshot of last quarter’s application.</p>
+            </div>
+            <div class="run-state" aria-label="Example run state">
+              <div class="run-state__row"><span>UI runners</span><strong>complete</strong></div>
+              <div class="run-state__row"><span>API runners</span><strong>complete</strong></div>
+              <div class="run-state__row"><span>A11y checks</span><strong>complete</strong></div>
+            </div>
+          </div>
+
+          <ol class="test-pipeline">
+            <li class="test-step">
+              <span class="test-step__number">01</span>
+              <div><h3>Application model</h3><p>Maps the app, requirements, and existing tests into one living view of behaviour.</p></div>
+              <span class="test-step__verb">Understand</span>
+            </li>
+            <li class="test-step">
+              <span class="test-step__number">02</span>
+              <div><h3>Risk-led planning</h3><p>Derives test cases, data, edge conditions, and priorities from every change.</p></div>
+              <span class="test-step__verb">Plan</span>
+            </li>
+            <li class="test-step">
+              <span class="test-step__number">03</span>
+              <div><h3>Parallel execution</h3><p>Drives browser, API, and environment checks without serial bottlenecks.</p></div>
+              <span class="test-step__verb">Run</span>
+            </li>
+            <li class="test-step">
+              <span class="test-step__number">04</span>
+              <div><h3>Behaviour verification</h3><p>Checks functional output, visual state, accessibility, and data integrity.</p></div>
+              <span class="test-step__verb">Verify</span>
+            </li>
+            <li class="test-step">
+              <span class="test-step__number">05</span>
+              <div><h3>Failure triage</h3><p>Clusters related failures and isolates the most likely root cause.</p></div>
+              <span class="test-step__verb">Diagnose</span>
+            </li>
+            <li class="test-step">
+              <span class="test-step__number">06</span>
+              <div><h3>CI/CD reporting</h3><p>Returns reproducible evidence, artifacts, and trends to the delivery team.</p></div>
+              <span class="test-step__verb">Improve</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="cycle-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7h-5V2"/><path d="M20 2 15.6 6.4A8 8 0 1 0 20 12"/></svg>
+          <span>Continuous by design — every deployment refreshes the model and runs the cycle again.</span>
+        </div>
+      </section>
+    </article>
+
+    <article class="product product--support">
+      <div class="product__intro">
+        <div>
+          <div class="product__identity">
+            <span class="product__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 18 0M21 16v2a4 4 0 0 1-4 4h-5"/><rect x="2" y="11" width="5" height="7" rx="1"/><rect x="17" y="11" width="5" height="7" rx="1"/></svg></span>
+            <span class="product__type">Omnichannel resolution system</span>
+          </div>
+          <h2>Support Agent</h2>
+        </div>
+        <p class="product__statement">One route from every channel to the right outcome. The agent resolves what it can and escalates what it should — <strong>with the case history already assembled.</strong></p>
+      </div>
+
+      <section class="system" aria-labelledby="support-system-title">
+        <div class="system__topline">
+          <span id="support-system-title">Resolution routing map</span>
+          <span class="system__status">Routing active</span>
+        </div>
+
+        <div class="support-map">
+          <svg class="support-connectors" viewBox="0 0 1000 390" preserveAspectRatio="none" fill="none" aria-hidden="true">
+            <path class="connector-base" d="M220 105 C300 105 300 195 385 195 M220 195 H385 M220 285 C300 285 300 195 385 195"/>
+            <path class="connector-base" d="M620 195 C705 195 705 128 790 128 M620 195 C705 195 705 262 790 262"/>
+            <path class="connector-flow" d="M220 105 C300 105 300 195 385 195 M220 195 H385 M220 285 C300 285 300 195 385 195"/>
+            <path class="connector-flow" d="M620 195 C705 195 705 128 790 128 M620 195 C705 195 705 262 790 262"/>
+          </svg>
+
+          <div class="route-zone">
+            <div class="route-zone__label">Channels in</div>
+            <div class="channel-list">
+              <div class="channel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span>Chat and messaging</span></div>
+              <div class="channel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Email</span></div>
+              <div class="channel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>Web and in-app</span></div>
+            </div>
+          </div>
+
+          <div class="route-zone support-core">
+            <div class="support-core__head"><h3>Resolution engine</h3><span>case context live</span></div>
+            <div class="core-stage"><span class="core-stage__index">01</span><div><div class="core-stage__name">Understand and route</div><div class="core-stage__detail">intent · urgency · ownership</div></div></div>
+            <div class="core-stage"><span class="core-stage__index">02</span><div><div class="core-stage__name">Retrieve the right evidence</div><div class="core-stage__detail">docs · account · ticket history</div></div></div>
+            <div class="core-stage"><span class="core-stage__index">03</span><div><div class="core-stage__name">Reason and take action</div><div class="core-stage__detail">tools · policy · approvals</div></div></div>
+          </div>
+
+          <div class="route-zone">
+            <div class="route-zone__label">Right outcome</div>
+            <div class="outcome-list">
+              <div class="outcome"><h3>Resolved by the agent</h3><p>Answer delivered or account action completed in the original channel.</p></div>
+              <div class="outcome outcome--human"><h3>Escalated to a person</h3><p>Owner, summary, evidence, and conversation history arrive together.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="learning-loop">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7h-5V2"/><path d="M20 2 15.6 6.4A8 8 0 1 0 20 12"/></svg>
+          <span>Resolution outcomes feed the knowledge and routing policy for the next case.</span>
+        </div>
+      </section>
+    </article>
+
+    <footer class="page-foot">
+      <span>Standalone design study — not connected to the production website.</span>
+      <span>Infinity DataLabs · The Observatory</span>
+    </footer>
+  </main>
+</body>
+</html>
