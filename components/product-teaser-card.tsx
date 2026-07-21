@@ -4,9 +4,7 @@ import type { CSSProperties } from "react";
 import type { Product } from "@/lib/site-data";
 
 // Homepage teaser card for an in-house product. Each carries its own spectral
-// accent (matching its /products panel) and a distinct animated mini-visual:
-// a waveform for Voice, a running pipeline for Testing, a routing splay for
-// Support. Presentation only; motion is CSS and reduced-motion safe.
+// accent matching its /products panel.
 
 const ACCENT: Record<string, string> = {
   "voice-ai-agent": "#58e6ff",
@@ -14,20 +12,24 @@ const ACCENT: Record<string, string> = {
   "support-agent": "#8b5cf6",
 };
 
-function Glyph({ slug }: { slug: string }) {
-  if (slug === "voice-ai-agent") {
-    return <div className="pt-wave" aria-hidden="true">{Array.from({ length: 16 }, (_, i) => <i key={i} />)}</div>;
-  }
-  if (slug === "testing-agent") {
-    return <div className="pt-segs" aria-hidden="true">{Array.from({ length: 6 }, (_, i) => <i key={i} />)}</div>;
-  }
-  return (
-    <div className="pt-flow" aria-hidden="true">
-      <span className="pt-flow-comet" />
-      <div className="pt-flow-nodes"><i /><i /><i className="hub" /><i /><i /></div>
-    </div>
-  );
-}
+// Animated mini-visuals, disabled for now: a waveform for Voice, a running
+// pipeline for Testing, a routing splay for Support. Restore by uncommenting
+// this and its call site below; the .pt-wave/.pt-segs/.pt-flow rules are still
+// in globals.css.
+// function Glyph({ slug }: { slug: string }) {
+//   if (slug === "voice-ai-agent") {
+//     return <div className="pt-wave" aria-hidden="true">{Array.from({ length: 16 }, (_, i) => <i key={i} />)}</div>;
+//   }
+//   if (slug === "testing-agent") {
+//     return <div className="pt-segs" aria-hidden="true">{Array.from({ length: 6 }, (_, i) => <i key={i} />)}</div>;
+//   }
+//   return (
+//     <div className="pt-flow" aria-hidden="true">
+//       <span className="pt-flow-comet" />
+//       <div className="pt-flow-nodes"><i /><i /><i className="hub" /><i /><i /></div>
+//     </div>
+//   );
+// }
 
 export function ProductTeaserCard({ product }: { product: Product }) {
   const Icon = product.icon;
@@ -45,7 +47,7 @@ export function ProductTeaserCard({ product }: { product: Product }) {
       <p className="eyebrow mt-6">{product.kicker}</p>
       <h3 className="mt-2 font-display text-2xl font-medium tracking-[-.03em] text-white">{product.name}</h3>
       <p className="mt-3 text-sm leading-6 text-slate-400">{product.tagline}</p>
-      <div className="mt-auto pt-7"><Glyph slug={product.slug} /></div>
+      {/* <div className="mt-auto pt-7"><Glyph slug={product.slug} /></div> */}
     </Link>
   );
 }
