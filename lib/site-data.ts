@@ -249,6 +249,35 @@ export const products: Product[] = [
   },
 ];
 
+// `wordmark` = the partner supplied only a mark, so we set their name beside it in
+// live text, painted with the gradient from their own brand lettering.
+export type Partner = { name: string; file: string; wordmark?: { gradient: string } };
+
+// Organisations we have actually delivered for. Files live in /public/logos —
+// generated from the originals in /public/partners with white/transparent margins
+// trimmed off, so every mark fills its chip at a consistent optical size. Logos are
+// never recoloured, cropped into, or stretched. Names drive the alt text.
+export const partners: Partner[] = [
+  { name: "Government of Odisha", file: "Seal_of_Odisha.png" },
+  { name: "Mo School", file: "Mo-school.png" },
+  { name: "Mo College", file: "mo-college.png" },
+  { name: "MCEME", file: "MCEME.png" },
+  { name: "Kalinga Hospital", file: "kalinga_hospital_ltd_logo.png" },
+  { name: "Nandankanan", file: "NANDANKANAN.png" },
+  { name: "Wildlife Odisha", file: "WILDLIFEODISHA.png" },
+  { name: "OFSDS", file: "OFSDS.png" },
+  { name: "Tatwa Technologies", file: "TATWA.png" },
+  { name: "Andolasoft", file: "andolasoft_inc_logo.png" },
+  // ProbeStack supplied only their mark. Their wordmark is Inter ExtraBold under the
+  // gradient below — the exact .gradient-text spec from their own app.
+  { name: "ProbeStack", file: "Probestack.png", wordmark: { gradient: "linear-gradient(90deg, #ff5b1f, #ffb400 40%, #1fbf9a)" } },
+  { name: "E Square", file: "Esquare.png" },
+  { name: "Experience Living", file: "ExperienceLiving.png" },
+  { name: "KRE", file: "KRE-Logo.png" },
+  { name: "Sparsh", file: "Sparsh.png" },
+  { name: "VIF", file: "VIF.png" },
+];
+
 export type Office = { city: string; lines: string[]; hq?: boolean };
 
 // Physical offices (all India). Address wording is user-provided — verify before

@@ -8,6 +8,7 @@ import { Stats } from "@/components/stats";
 import { TechMarquee } from "@/components/tech-marquee";
 import { CtaSection } from "@/components/cta-section";
 import { ProductTeaserCard } from "@/components/product-teaser-card";
+import { PartnerWall } from "@/components/partner-wall";
 import { engagementModels, industries, process, products, services } from "@/lib/site-data";
 
 export default function HomePage() {
@@ -23,6 +24,8 @@ export default function HomePage() {
     <section className="border-y border-white/10 bg-white/[.012]"><div className="mx-auto flex max-w-[1240px] flex-col gap-5 px-5 py-6 text-xs uppercase tracking-[.15em] text-slate-500 sm:px-8 lg:flex-row lg:items-center lg:justify-between"><span>Built for complex environments</span><div className="flex flex-wrap gap-x-7 gap-y-3 text-slate-300"><span>Enterprise</span><span>Government</span><span>Mid-market</span><span>Startups</span></div></div></section>
 
     <section id="expertise" className="section-shell"><div className="mx-auto max-w-[1240px] px-5 sm:px-8"><Reveal><div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between"><SectionHeading eyebrow="Connected expertise" title="One partner across the systems that matter." copy="From model behavior to production infrastructure, we connect the disciplines required to build technology that holds up in the real world." /><ButtonLink href="/services" variant="secondary" arrow>All services</ButtonLink></div></Reveal><div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{services.slice(0, 6).map((service, index) => <Reveal key={service.slug} delay={(index % 3) * 0.06}><ServiceCard service={service} index={index} /></Reveal>)}</div></div></section>
+
+    <section className="section-shell overflow-hidden border-t border-white/10 bg-white/[.012]"><div className="mx-auto max-w-[1240px] px-5 sm:px-8"><Reveal><SectionHeading eyebrow="Partners" title="Organizations we've delivered for." copy="Government, education, healthcare, conservation, and technology partners—systems built, integrated, and supported by our team." /></Reveal></div><div className="mt-14"><PartnerWall /></div></section>
 
     <section className="section-shell border-y border-white/10 bg-[#070a11]"><div className="mx-auto max-w-[1240px] px-5 sm:px-8"><div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-24"><Reveal><SectionHeading eyebrow="Why Infinity" title="Engineering depth without organizational drag." copy="We bring senior thinking close to delivery. Fewer handoffs, clearer decisions, and a team designed around the work—not a fixed catalog." /></Reveal><Reveal delay={0.08}><div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2">{["Architecture grounded in operating reality", "AI safety and evaluation built into delivery", "Security and quality embedded from day one", "Direct access to the people doing the work"].map((item) => <div key={item} className="flex min-h-32 gap-3 bg-[#080c14] p-6"><Check className="mt-0.5 size-5 shrink-0 text-cyan-300" aria-hidden="true" /><p className="text-sm leading-6 text-slate-300">{item}</p></div>)}</div></Reveal></div><div className="mt-20"><Stats /></div></div></section>
 
