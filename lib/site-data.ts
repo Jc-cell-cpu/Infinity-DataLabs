@@ -17,6 +17,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+// The one canonical origin, used by metadata, robots, sitemap, and structured data.
+// It MUST match the primary domain configured at the host, or every canonical tag
+// and sitemap entry points at a URL that redirects — which is what search engines
+// report as "page with redirect" and why brand signals get split across hostnames.
+export const SITE_URL = "https://infinity-datalabs.com";
+
 export type Service = {
   slug: string;
   title: string;
