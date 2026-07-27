@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 // Bump whenever the substance of the notice changes — a privacy notice without a
 // current effective date is not much use to the reader or to a regulator.
 const LAST_UPDATED = "21 July 2026";
-const CONTACT = "hello@infinity-datalabs.com";
+const CONTACT = "bikram@infinity-datalabs.com";
 
 function Clause({ title, children }: { title: string; children: ReactNode }) {
   return (

@@ -41,7 +41,7 @@ export function SiteFooter() {
         <div className="sm:col-span-2 md:col-span-1">
           <p className="text-xs font-semibold uppercase tracking-[.18em] text-slate-400">Contact</p>
           <div className="mt-5 space-y-2">
-            <a href="mailto:hello@infinity-datalabs.com" className="footer-contact-row group"><Mail className="size-4 text-cyan-200" aria-hidden="true" /><span>hello@infinity-datalabs.com</span></a>
+            <a href="mailto:bikram@infinity-datalabs.com" className="footer-contact-row group"><Mail className="size-4 text-cyan-200" aria-hidden="true" /><span>bikram@infinity-datalabs.com</span></a>
             <a href="https://infinity-datalabs.com" className="footer-contact-row group"><Globe2 className="size-4 text-blue-300" aria-hidden="true" /><span>infinity-datalabs.com</span></a>
             <div className="footer-contact-row"><Clock3 className="size-4 text-emerald-300" aria-hidden="true" /><span>Response within two business days</span></div>
           </div>

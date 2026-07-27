@@ -38,7 +38,7 @@ const structuredData = {
       url: SITE_URL,
       logo: `${SITE_URL}/brand/infinity-datalabs-icon-512.png`,
       image: `${SITE_URL}/brand/infinity-datalabs-icon-512.png`,
-      email: "hello@infinity-datalabs.com",
+      email: "bikram@infinity-datalabs.com",
       description: "AI engineering, software engineering, cyber security, data, cloud, and technology resource partner.",
       knowsAbout: ["Agentic AI", "Software Engineering", "Cloud Platforms", "Cyber Security", "Data Engineering", "Quality Engineering"],
       address: { "@type": "PostalAddress", streetAddress: "IDCO Tower", addressLocality: "Bhubaneswar", addressRegion: "Odisha", addressCountry: "IN" },
